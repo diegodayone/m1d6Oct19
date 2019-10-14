@@ -13,12 +13,53 @@
         text-align: center;
         padding: 40px;
     }
+
+    .student{
+        color: darkgray;
+        font-weight: bold;
+    }
     </style>
 </head>
 <body>
     <div id="myDiv">
-        Some text inside
-        <p> Some xtra text </p>
+        <input type="text" id="studentName">
+        <input type="button" value="Add Student" onclick="addStudent(event)">
+        <input type="button" value="Clean" onclick="removeStudents(event)" >
     </div>
+
+    <ul id="students">
+        
+    </ul>
+
+    <script>
+        function removeStudents(event){
+            var studentList = document.querySelector("#students");
+            studentList.innerHTML = ""
+        }
+
+        function addStudent(event){
+            //get the text inside studentName
+            var studentName = document.querySelector("#studentName"); //get a reference
+            var studentNameValue = studentName.value; //get the value
+
+            if (studentNameValue.length > 0){
+                //add a new LI into the students list
+                var myStudentLI = document.createElement("li"); //create a li
+                myStudentLI.classList.add("student") //set the class to student
+                myStudentLI.innerText = studentNameValue; //set the inner text as value
+                myStudentLI.onclick = function(event) {
+                    var student = event.currentTarget;
+                    var studentParent = student.parentNode;
+                    studentParent.removeChild(student);
+                    //event.currentTarget.style.display = "none";
+                }
+                var studentList = document.querySelector("#students"); //get a reference to the list
+                studentList.appendChild(myStudentLI);  //add as a child to the list
+
+                //empty the studentName input
+                studentName.value = ""
+            }
+        }
+    </script>
 </body>
 </html>
